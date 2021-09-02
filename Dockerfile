@@ -5,8 +5,7 @@ WORKDIR /data
 
 #Install dependacies
 RUN pip install pandas==1.1.5 \
-                scikit-learn==0.23.2 \
-                pydrive
+                scikit-learn==0.23.2
 
 #Copy everything in root on my WORKDIR
 COPY . .

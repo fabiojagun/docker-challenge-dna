@@ -1,0 +1,3 @@
+#Ignora esses arquivos no push do git
+__pycache__/
+data-model-docker.csv

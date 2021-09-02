@@ -3,8 +3,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
 from sklearn.pipeline import Pipeline
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
 
 def exec_script():
     print("entrou no exec_script")
@@ -34,20 +32,7 @@ def exec_script():
     data_pred.to_csv('data-model-docker.csv', index = False)
     print("salvou csv")
 
-def save_google_drive():
-    print("entrou no save_google_drive")
-    gauth = GoogleAuth()           
-    drive = GoogleDrive(gauth)
-
-    upload_file_list = ['data-model-docker.csv']
-    for upload_file in upload_file_list:
-	    gfile = drive.CreateFile({'parents': [{'id': '1wuqAacbFGDoP4wVh3iZpZS-LCu3M3TZT'}]})
-	    # Read file and set it as the content of this instance.
-	    gfile.SetContentFile(upload_file)
-	    gfile.Upload() # Upload the file.
-
 def __init__():
     print("entrou no __init__")
     exec_script()
-    save_google_drive()
 
