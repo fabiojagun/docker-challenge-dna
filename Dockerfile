@@ -1,12 +1,15 @@
 FROM python:3.8-slim-buster
 
-RUN mkdir /app
-WORKDIR /app
+#Make a directory for the application in the container, WORKDIR creates a directory (folder)
+WORKDIR /data
 
-RUN pip install jupyter \
-                pandas==1.1.5 \
-                scikit-learn==0.23.2
+#Install dependacies
+RUN pip install pandas==1.1.5 \
+                scikit-learn==0.23.2 \
+                pydrive
 
+#Copy everything in root on my WORKDIR
 COPY . .
 
-CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+#Run application
+CMD ["./start.sh"]
