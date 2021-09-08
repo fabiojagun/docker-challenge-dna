@@ -1,16 +1,24 @@
+#Importing libraries
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
 from sklearn.pipeline import Pipeline
 
+
 def exec_script():
-    print("entrou no exec_script")
+
+    #Just used as an effect to see the docker working - TODO remove
+    print("entered exec_script")
+
+    #Setting dataframe
     pd.set_option('display.max_colwidth', 120)
     df = pd.read_json('reviews.json')
 
+    #Changing value names from the column sentiment
     df = df.replace({'sentiment' : { 'pos' : "Positive", 'neg' : "Negative", 'neutral' : "Neutral" }})
 
+    #Spliting train and test subsets
     x_train, x_test, y_train, y_test = train_test_split(df.text, df.sentiment, test_size = 0.2, random_state = 0)
 
     #TfidfVectorizer() - Convert a collection of raw documents to a matrix of TF-IDF features. Equivalent to CountVectorizer 
@@ -23,16 +31,26 @@ def exec_script():
         ("tdidf", TfidfVectorizer()),
         ("clf", LinearSVC())])
 
+    #Fitting to the model ("learning" the model)
     pipe.fit(x_train, y_train)
 
+    #The predict() function works on top of the trained model and makes use of the learned label to map and predict the labels 
+    #for the data to be tested.
     y_pred = pipe.predict(x_test)
 
+    #Creating a data frame with our model trained and the predictions
     data_pred = pd.DataFrame({'Data Model':y_pred})
 
+    #Saving the model as a .csv file
     data_pred.to_csv('data-model-docker.csv', index = False)
-    print("salvou csv")
+
+    #Just used as an effect to see the docker working - TODO remove
+    print("csv saved")
 
 def __init__():
-    print("entrou no __init__")
+
+    #Just used as an effect to see the docker working - TODO remove
+    print("__init__ initialized")
+
     exec_script()
 
